@@ -1,6 +1,4 @@
 (function(){
-
-  "use strit"
   
   //Web Font Loader
   window.WebFontConfig = {
