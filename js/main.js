@@ -70,29 +70,29 @@
     timerChild.style.width = `${time * 20}px`;
     timer.appendChild(timerChild);
     //ここで制限時間指定
-    timerChild.style.animation = `timerBifore .27s linear 0s alternate forwards,timerAfter ${time * 0.55 + 1}s linear .4s`;
+    timerChild.style.animation = `timerAfter ${time * 0.55 + 1}s linear .4s`;
 
-    setTimeout(()=>{
-      timerChild.addEventListener("animationend",()=>{
-        timer.removeChild(timer.firstChild);
-        if(untype.textContent.length === 0){
-          return;
-        }
-        //出題数に達していて、現在の問題を打ち終わったら終了
-        if((scoreCount >= QuestionLength) && (untype.textContent.length === 0)){
-          finish();
-          return;
-        };
-        //問題が底をついたら終了
-        if(questions.length === 0){
-          finish();
-          return;
-        };
-        setQuestion();
-        badSound.currentTime = 0;
-        badSound.play();
-      });
-    },500);
+    timerChild.addEventListener("animationend",()=>{
+      timer.removeChild(timer.firstChild);
+      if(untype.textContent.length === 0){
+        return;
+      }
+      //出題数に達していて、現在の問題を打ち終わったら終了
+      if((scoreCount >= QuestionLength) && (untype.textContent.length === 0)){
+        finish();
+        return;
+      };
+      //問題が底をついたら終了
+      if(questions.length === 0){
+        finish();
+        return;
+      };
+      setQuestion();
+      badSound.currentTime = 0;
+      badSound.play();
+    });
+    // setTimeout(()=>{
+    // },500);
   };
 
   //パーセンテージの表示
