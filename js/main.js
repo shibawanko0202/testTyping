@@ -39,11 +39,6 @@
   badSound.volume = .9;
   const finishSound = new Audio("sound/クイズ正解3.mp3");
 
-  typeSound.load();
-  resetSound.load();
-  badSound.load();
-  finishSound.load();
-
   //ミスタイプのキーリスト 
   const missType = [];
 
@@ -245,6 +240,10 @@
       location.reload();
       return;
     };
+    typeSound.load();
+    resetSound.load();
+    badSound.load();
+    finishSound.load();
     untype.classList.remove("flash");
     setQuestion();
     startTime = Date.now();
