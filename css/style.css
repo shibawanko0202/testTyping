@@ -1,6 +1,6 @@
 /* common */
 
-/* html{
+html{
   height: 100%;
 }
 body{
@@ -11,11 +11,11 @@ body{
   font-family: 'Monofett', cursive;
   color: rgb(8, 41, 26);
   user-select: none;
-} */
+}
 
 /* header */
 
-/* header{
+header{
   display: flex;
   height: 70px;
   justify-content: space-between;
@@ -67,11 +67,11 @@ ul li a:hover{
 }
 #hambarger{
   display: none;
-} */
+}
 
 /* main */
 
-/* #main{
+#main{
   background-color: #fff;
   box-shadow: 4px 4px 4px rgb(33, 56, 46);
   opacity: 0.9;
@@ -268,11 +268,11 @@ visibility:hidden;
 }
 .balloon:hover{
   z-index: 1;
-} */
+}
 
 /* footer */
 
-/* footer{
+footer{
   color: #fff;
   font-size: 24px;
   width: 100%;
@@ -284,11 +284,11 @@ visibility:hidden;
 }
 .wf-active footer{
   visibility:visible;
-} */
+}
 
 /* overlay */
 
-/* #overlay{
+#overlay{
   z-index: 1;
   position:fixed;
   top: 0;
@@ -342,11 +342,11 @@ visibility:hidden;
   color: #fff;
   font-size: 36px;
   cursor: pointer;
-} */
+}
 
 /* mobile */
 
-/* @media(max-width: 600px){
+@media(max-width: 600px){
   .normal_menu{
    display: none;
   }
@@ -364,5 +364,5 @@ visibility:hidden;
     opacity: 0;
     pointer-events: none;
   }
-} */
+}
 
