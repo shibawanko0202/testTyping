@@ -234,7 +234,11 @@
   });
 
   function soundSet(){
-    silentSound.load();
+    if(silentSound.readyState < 4){
+      console.log("ロードされていないのでろーどします");
+
+      silentSound.load();
+    };
     silentSound.play();
 
     typeSound.load();
