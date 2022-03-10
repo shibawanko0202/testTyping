@@ -32,12 +32,18 @@
   const timer = document.getElementById("timer");
 
   //サウンドエフェクト
-  const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+  const typeSound = document.getElementById("typesound");
   typeSound.volume = 0.5;
-  const resetSound = new Audio("sound/受話器置く03.mp3");
-  const badSound = new Audio("sound/パッ.mp3");
+  const resetSound = document.getElementById("resetsound");
+  const badSound = document.getElementById("badsound");
   badSound.volume = .9;
-  const finishSound = new Audio("sound/クイズ正解3.mp3");
+  const finishSound = document.getElementById("finishsound");
+  // const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+  // typeSound.volume = 0.5;
+  // const resetSound = new Audio("sound/受話器置く03.mp3");
+  // const badSound = new Audio("sound/パッ.mp3");
+  // badSound.volume = .9;
+  // const finishSound = new Audio("sound/クイズ正解3.mp3");
 
   //ミスタイプのキーリスト 
   const missType = [];
