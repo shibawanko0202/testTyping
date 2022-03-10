@@ -38,6 +38,7 @@
   const badSound = document.getElementById("badsound");
   badSound.volume = .9;
   const finishSound = document.getElementById("finishsound");
+  const silentSound = document.getElementById("silentsound");
   // const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
   // typeSound.volume = 0.5;
   // const resetSound = new Audio("sound/受話器置く03.mp3");
@@ -232,24 +233,31 @@
     };
   });
 
+  function soundSet(){
+    silentSound.load();
+    silentSound.play();
+
+    typeSound.load();
+    resetSound.load();
+    badSound.load();
+    finishSound.load();
+  };
+
   //始めの問題をセット
-  window.addEventListener("keydown",(e)=>{
+  window.addEventListener("click",(e)=>{
     if(isTyping){
       return;
     };
     //Enter/Space to restart
-    if(!(e.key === " " || e.key === "Enter")){
-      return;
-    };
+    // if(!(e.key === " " || e.key === "Enter")){
+    //   return;
+    // };
     //終了していたらリロード
     if((scoreCount > QuestionLength) || (questions.length === 0)){
       location.reload();
       return;
     };
-    typeSound.load();
-    resetSound.load();
-    badSound.load();
-    finishSound.load();
+    soundSet();
     untype.classList.remove("flash");
     setQuestion();
     startTime = Date.now();
