@@ -76,6 +76,10 @@ const questions = [
     mean : "要素の透過率を指定する為のプロパティ"},
   {word : "z-index",
     mean : "要素の重なりの優先度を指定する為のプロパティ"},
+  {word : "@keyframes",
+    mean : "詳細にアニメーションを設定できるアットルール"},
+  {word : "@media",
+    mean : "画面のサイズに合わせてcssの適用を変化させるアットルール"},
 
   //javascript
   {word : "helloworld",
@@ -94,6 +98,8 @@ const questions = [
     mean : "DOMツリーへアクセスする為のオブジェクト"},
   {word : "getelementbyid",
     mean : "指定されたidを取得する為のメソッド"},
+  {word : "queryselector",
+    mean : "指定されたセレクターの最初の要素を取得する為のメソッド"},
   {word : "textcontent",
     mean : "ノードとその子孫のテキストを表すプロパティ"},
   {word : "addeventlistener",
@@ -136,6 +142,8 @@ const questions = [
   //命名
   {word : "current",
     mean : "「現在の」変数名などでよく使用される"},
+  {word : "disabled",
+    mean : "「無効」クラス名などでよく使用される"},
 
   //ファイル名
   {word : "index.html",

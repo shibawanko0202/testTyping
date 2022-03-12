@@ -1,4 +1,5 @@
 (function(){
+  "use strit"
   
   //Web Font Loader
   window.WebFontConfig = {
@@ -15,7 +16,7 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(wf, s);
   })();
-
+  
   //DOMの取得
   const typed = document.getElementById("typed");
   const untype = document.getElementById("untype");
@@ -24,43 +25,37 @@
   const mean = document.getElementById("mean");
   const accuracy = document.getElementById("accuracy"); 
   const rate = document.getElementById("rate");
-  const main = document.getElementById("main");
+  const balloonRoom = document.getElementById("balloonroom");
   const hambarger = document.getElementById("hambarger");
   const overlay = document.getElementById("overlay");
   const close = document.getElementById("close");
   const restart = document.getElementById("restart");
   const timer = document.getElementById("timer");
-
+  
   //サウンドエフェクト
-  const typeSound = document.getElementById("typesound");
-  typeSound.volume = 0.5;
-  const resetSound = document.getElementById("resetsound");
-  const badSound = document.getElementById("badsound");
+  const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+  typeSound.volume = 0.4;
+  const resetSound = new Audio("sound/受話器置く03.mp3");
+  resetSound.volume = 0.8;
+  const badSound = new Audio("sound/パッ.mp3");
   badSound.volume = .9;
-  const finishSound = document.getElementById("finishsound");
-  const silentSound = document.getElementById("silentsound");
-  // const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
-  // typeSound.volume = 0.5;
-  // const resetSound = new Audio("sound/受話器置く03.mp3");
-  // const badSound = new Audio("sound/パッ.mp3");
-  // badSound.volume = .9;
-  // const finishSound = new Audio("sound/クイズ正解3.mp3");
-
-  //ミスタイプのキーリスト 
+  const finishSound = new Audio("sound/クイズ正解3.mp3");
+  
+  //ミスタイプのキーリスト
   const missType = [];
-
+  
   //時間関係
   let startTime;
   let isTyping = false;
-
+  
   //出題数(文字数)
   const QuestionLength = 350;
-
+  
   //正誤カウント
   let scoreCount = 0;
   let badCount = 0;
   let accuracyRate;
-
+  
   //問題のセット
   function setQuestion(){
     const q = questions.splice(Math.floor(Math.random() * questions.length),1)[0];
@@ -69,39 +64,39 @@
     mean.textContent = q.mean;
     setTimer(untype.textContent.length);
   };
-
+  
   //時間制限
   function setTimer(time){
     const timerChild = document.createElement("div");
     timerChild.classList.add("timer");
-    timerChild.style.width = `${time * 20}px`;
+    timerChild.style.width = `${time * 12 + 15}px`;
     timer.appendChild(timerChild);
     //ここで制限時間指定
-    timerChild.style.animation = `timerAfter ${time * 0.55 + 1}s linear .4s`;
-
-    timerChild.addEventListener("animationend",()=>{
-      timer.removeChild(timer.firstChild);
-      if(untype.textContent.length === 0){
-        return;
-      }
-      //出題数に達していて、現在の問題を打ち終わったら終了
-      if((scoreCount >= QuestionLength) && (untype.textContent.length === 0)){
-        finish();
-        return;
-      };
-      //問題が底をついたら終了
-      if(questions.length === 0){
-        finish();
-        return;
-      };
-      setQuestion();
-      badSound.currentTime = 0;
-      badSound.play();
-    });
-    // setTimeout(()=>{
-    // },500);
+    timerChild.style.animation = `timerBifore .27s 0s forwards,timerAfter ${time * .55 + 1}s ease-in-out .4s`;
+    //アニメーションの終了と同時に次の問題へ
+    setTimeout(()=>{
+      timerChild.addEventListener("animationend",()=>{
+        timer.removeChild(timer.firstChild);
+        if(untype.textContent.length === 0){
+          return;
+        }
+        //出題数に達していて、現在の問題を打ち終わったら終了
+        if((scoreCount >= QuestionLength) && (untype.textContent.length === 0)){
+          finish();
+          return;
+        };
+        //問題が底をついたら終了
+        if(questions.length === 0){
+          finish();
+          return;
+        };
+        setQuestion();
+        badSound.currentTime = 0;
+        badSound.play();
+      });
+    },500);
   };
-
+  
   //パーセンテージの表示
   function renderRate(){
     let accuracyRate = (scoreCount / (scoreCount + badCount) * 100).toFixed(2);
@@ -129,14 +124,14 @@
     let finishTime = Date.now() - startTime;
     mean.textContent = `${(finishTime / 1000).toFixed(2)}seconds`;
   };
-
+  
   //ミスしたキーのバルーンを作成
   function createBalloon(key){
     let balloon = document.createElement("div");
     balloon.className = "balloon";
     balloon.id = `${key}`;
-    balloon.style.top = `${Math.random() * 100}%`;
-    balloon.style.left = `${Math.random() * 100}%`;
+    balloon.style.top = `${Math.random() * 98 + 1}%`;
+    balloon.style.left = `${Math.random() * 98 + 1}%`;
     balloon.textContent = `${key}`;
     //カーソルをのせたら数値を表示
     balloon.addEventListener("mouseenter",()=>{
@@ -147,9 +142,19 @@
       balloon.style.fontSize = "14px";
       balloon.textContent = `${key}`;
     });
-    main.appendChild(balloon);
+    //クリックしたら破裂
+    balloon.addEventListener("click",()=>{
+      balloon.classList.add("explosion");
+      badSound.currentTime = 0;
+      badSound.play();
+      //アニメーションが終了したら要素を消す
+      balloon.addEventListener("animationend",()=>{
+        balloon.classList.add("disabled");
+      });
+    });
+    balloonRoom.appendChild(balloon);
   };
-
+  
   //ハンバーガーメニュー
   hambarger.addEventListener("click",()=>{
     overlay.classList.add("show");
@@ -174,7 +179,7 @@
       //untypeから削ってtypedに足す
       typed.textContent += "_";
       untype.textContent = untype.textContent.slice(1);
-
+  
       //スコアを加点
       scoreCount++;
       score.textContent = scoreCount;
@@ -184,11 +189,11 @@
       score.addEventListener("animationend",()=>{
         score.classList.remove("pyon");
       });
-
+  
       //タイプ音を鳴らす
       typeSound.currentTime = 0;
       typeSound.play();
-
+  
       //もしuntypeが無くなったら次の問題へ
       if(untype.textContent.length === 0){
         timer.removeChild(timer.firstChild);
@@ -201,7 +206,7 @@
         resetSound.currentTime = 0;
         resetSound.play();
       };
-
+  
     } else { //ミスタイプした場合
       //ミスタイプに加点
       badCount++;
@@ -212,17 +217,19 @@
       bad.addEventListener("animationend",()=>{
         bad.classList.remove("pyon");
       });
-
+  
       //ブザーを鳴らす
       badSound.currentTime = 0;
       badSound.play();
-
+  
       //ミスタイプのキーをカウント
       if(missType.find((v) => v.key === e.key)){ //すでにあるなら加点
         missType.find((v) => v.key === e.key).num++;
+        const missKey = document.getElementById(`${e.key}`);
         //大きくする倍率指定
-        document.getElementById(`${e.key}`).style.transform = `scale(${(missType.find((v) => v.key === e.key).num) * 0.9})`;
-
+        missKey.style.transform = `scale(${(missType.find((v) => v.key === e.key).num) * 0.9})`;
+        //破裂させたバルーンを復活
+        missKey.classList.remove("explosion","disabled");
       } else { //初めてのミスキーカウント
         createBalloon(e.key);
         missType.push({
@@ -232,36 +239,21 @@
       };
     };
   });
-
-  function soundSet(){
-    if(silentSound.readyState < 4){
-      console.log("ロードされていないのでろーどします");
-
-      silentSound.load();
-    };
-    silentSound.play();
-
-    typeSound.load();
-    resetSound.load();
-    badSound.load();
-    finishSound.load();
-  };
-
+  
   //始めの問題をセット
-  window.addEventListener("click",(e)=>{
+  window.addEventListener("keydown",(e)=>{
     if(isTyping){
       return;
     };
     //Enter/Space to restart
-    // if(!(e.key === " " || e.key === "Enter")){
-    //   return;
-    // };
+    if(!(e.key === " " || e.key === "Enter")){
+      return;
+    };
     //終了していたらリロード
     if((scoreCount > QuestionLength) || (questions.length === 0)){
       location.reload();
       return;
     };
-    soundSet();
     untype.classList.remove("flash");
     setQuestion();
     startTime = Date.now();
