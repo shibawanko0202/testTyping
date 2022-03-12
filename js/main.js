@@ -40,6 +40,7 @@
   const badSound = new Audio("sound/パッ.mp3");
   badSound.volume = .9;
   const finishSound = new Audio("sound/クイズ正解3.mp3");
+  const silentSound = new Audio("sound/silent.mp3")
   
   //ミスタイプのキーリスト
   const missType = [];
@@ -254,6 +255,12 @@
       location.reload();
       return;
     };
+    silentSound.play();
+    typeSound.load();
+    resetSound.load();
+    badSound.load();
+    finishSound.load();
+    
     untype.classList.remove("flash");
     setQuestion();
     startTime = Date.now();
