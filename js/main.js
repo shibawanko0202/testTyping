@@ -91,6 +91,8 @@
           return;
         };
         setQuestion();
+        const bubbleSound = new Audio("sound/パッ.mp3");
+        bubbleSound.volume = .9;
         bubbleSound.currentTime = 0;
         bubbleSound.play();
       });
@@ -123,10 +125,14 @@
         return;
       };
       animeCount++;
+      const bubbleSound = new Audio("sound/パッ.mp3");
+      bubbleSound.volume = .9;
       bubbleSound.currentTime = 0;
       bubbleSound.play();
     });
     balloonRoom.appendChild(bonus);
+    const bubbleSound = new Audio("sound/パッ.mp3");
+    bubbleSound.volume = .9;
     bubbleSound.currentTime = 0;
     bubbleSound.play()
   };
@@ -152,6 +158,7 @@
     typed.textContent = "";
     const finishScore = ((scoreCount + bonusPoint - (finishTime / 1000)) * (accuracyRate / 100)).toFixed(2);
     untype.textContent = finishScore;
+    const finishSound = new Audio("sound/クイズ正解3.mp3");
     finishSound.currentTime = 0;
     finishSound.play();
     timer.classList.add("hidden");
@@ -193,6 +200,8 @@
     //クリックしたら破裂
     balloon.addEventListener("click",()=>{
       balloon.classList.add("explosion");
+      const bubbleSound = new Audio("sound/パッ.mp3");
+      bubbleSound.volume = .9;
       bubbleSound.currentTime = 0;
       bubbleSound.play();
       //アニメーションが終了したら要素を消す
@@ -245,6 +254,8 @@
       });
   
       //タイプ音を鳴らす
+      const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+      typeSound.volume = 0.4;
       typeSound.currentTime = 0;
       typeSound.play();
   
@@ -257,6 +268,8 @@
           return;
         };
         setQuestion();
+        const resetSound = new Audio("sound/受話器置く03.mp3");
+        resetSound.volume = 0.8;
         resetSound.currentTime = 0;
         resetSound.play();
       };
@@ -273,6 +286,8 @@
         bad.classList.remove("pyon");
       });
       //ブザーを鳴らす
+      const bubbleSound = new Audio("sound/パッ.mp3");
+      bubbleSound.volume = .9;
       bubbleSound.currentTime = 0;
       bubbleSound.play();
   
@@ -311,6 +326,8 @@
     setQuestion();
     startTime = Date.now();
     isTyping = true;
+    const resetSound = new Audio("sound/受話器置く03.mp3");
+    resetSound.volume = 0.8;
     resetSound.currentTime = 0;
     resetSound.play();
   });
