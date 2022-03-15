@@ -76,9 +76,9 @@ const questions = [
     mean : "要素の透過率を指定する為のプロパティ"},
   {word : "z-index",
     mean : "要素の重なりの優先度を指定する為のプロパティ"},
-  {word : "@keyframes",
+  {word : "keyframes",
     mean : "詳細にアニメーションを設定できるアットルール"},
-  {word : "@media",
+  {word : "media",
     mean : "画面のサイズに合わせてcssの適用を変化させるアットルール"},
 
   //javascript
@@ -138,6 +138,10 @@ const questions = [
     mean : "指定したタグの要素を生成するメソッド"},
   {word : "appendchild",
     mean : "指定した親ノードの末尾に()のノードを生成するメソッド"},
+  {word : "navigator",
+    mean : "ユーザーが使用しているブラウザの情報を持つオブジェクト"},
+  {word : "useragent",
+    mean : "使用しているデバイスの情報を持つnavigatorのプロパティ"},
 
   //命名
   {word : "current",

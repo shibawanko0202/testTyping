@@ -1,6 +1,4 @@
-(function(){
-  "use strit"
-  
+
   //Web Font Loader
   window.WebFontConfig = {
     google: { families: ['Ibarra+Real+Nova','Monofett','Xanh+Mono'] },
@@ -37,10 +35,9 @@
   typeSound.volume = 0.4;
   const resetSound = new Audio("sound/受話器置く03.mp3");
   resetSound.volume = 0.8;
-  const badSound = new Audio("sound/パッ.mp3");
-  badSound.volume = .9;
+  const bubbleSound = new Audio("sound/パッ.mp3");
+  bubbleSound.volume = .9;
   const finishSound = new Audio("sound/クイズ正解3.mp3");
-  const silentSound = new Audio("sound/silent.mp3")
   
   //ミスタイプのキーリスト
   const missType = [];
@@ -55,7 +52,9 @@
   //正誤カウント
   let scoreCount = 0;
   let badCount = 0;
-  let accuracyRate;
+  let accuracyRate = 0;
+  let continuousCorrect = 0;
+  let bonusPoint = 0;
   
   //問題のセット
   function setQuestion(){
@@ -80,7 +79,7 @@
         timer.removeChild(timer.firstChild);
         if(untype.textContent.length === 0){
           return;
-        }
+        };
         //出題数に達していて、現在の問題を打ち終わったら終了
         if((scoreCount >= QuestionLength) && (untype.textContent.length === 0)){
           finish();
@@ -92,15 +91,49 @@
           return;
         };
         setQuestion();
-        badSound.currentTime = 0;
-        badSound.play();
+        bubbleSound.currentTime = 0;
+        bubbleSound.play();
       });
     },500);
+  };
+
+  //ボーナスアニメーション
+  function getBonus(point){
+    let bonus = document.createElement("div");
+    bonus.className = "bonus";
+    bonus.style.top = `${Math.random() * 40 + 40}%`;
+    //左右どっちに作るか
+    let LorR = Math.floor(Math.random() * 2);
+    if(LorR === 0){
+      bonus.style.left = `${Math.random() * 30}%`;
+    } else {
+      bonus.style.right = `${Math.random() * 30}%`;
+    };
+    bonus.textContent = `${point * 10}type`;
+    bonus.style.width = `${point * 6 + 60}px`;
+    bonus.style.height = `${point * 6 + 60}px`;
+    bonus.style.lineHeight = `${point * 6 + 75}px`;
+    bonus.style.fontSize = `${point * 1.5 + 16}px`;
+    bonus.style.backgroundColor = `hsla(${Math.random() * 360}, 65%, 55%, .6)`;
+    //アニメーションが全て終わったら消す
+    let animeCount = 0;
+    bonus.addEventListener("animationend",()=>{
+      if(animeCount == 1){
+        bonus.classList.add("disabled");
+        return;
+      };
+      animeCount++;
+      bubbleSound.currentTime = 0;
+      bubbleSound.play();
+    });
+    balloonRoom.appendChild(bonus);
+    bubbleSound.currentTime = 0;
+    bubbleSound.play()
   };
   
   //パーセンテージの表示
   function renderRate(){
-    let accuracyRate = (scoreCount / (scoreCount + badCount) * 100).toFixed(2);
+    accuracyRate = (scoreCount / (scoreCount + badCount) * 100).toFixed(2);
     accuracy.textContent = accuracyRate;
     rate.classList.remove("safe","caution","dead");
     if(accuracyRate >= 95){
@@ -114,16 +147,17 @@
   
   //終了
   function finish(){
-    typed.textContent = "";
-    untype.textContent = "finished!";
-    untype.classList.add("flash");
     isTyping = false;
-    mean.textContent = "";
+    let finishTime = Date.now() - startTime;
+    typed.textContent = "";
+    const finishScore = ((scoreCount + bonusPoint - (finishTime / 1000)) * (accuracyRate / 100)).toFixed(2);
+    untype.textContent = finishScore;
     finishSound.currentTime = 0;
     finishSound.play();
+    timer.classList.add("hidden");
+    untype.classList.add("score");
     restart.classList.add("show");
-    let finishTime = Date.now() - startTime;
-    mean.textContent = `${(finishTime / 1000).toFixed(2)}seconds`;
+    mean.textContent = `finished! ${(finishTime / 1000).toFixed(2)}seconds`;
   };
   
   //ミスしたキーのバルーンを作成
@@ -131,9 +165,22 @@
     let balloon = document.createElement("div");
     balloon.className = "balloon";
     balloon.id = `${key}`;
-    balloon.style.top = `${Math.random() * 98 + 1}%`;
-    balloon.style.left = `${Math.random() * 98 + 1}%`;
     balloon.textContent = `${key}`;
+    //問題文に被らないようにランダム配置
+    let blocks = Math.floor(Math.random() * 7);
+    if(blocks == 0){//上端ブロック
+      balloon.style.top = `${Math.random() * 10 + 1}%`;
+      balloon.style.left = `${Math.random() * 98 + 1}%`;
+    } else if(blocks <= 2){//下端ブロック
+      balloon.style.bottom = `${Math.random() * 20 + 1}%`;
+      balloon.style.left = `${Math.random() * 98 + 1}%`;
+    } else if(blocks <= 4){//左端ブロック
+      balloon.style.top = `${Math.random() * 69 + 11}%`;
+      balloon.style.left = `${Math.random() * 28 + 1}%`;
+    } else {//右端ブロック
+      balloon.style.top = `${Math.random() * 69 + 11}%`;
+      balloon.style.right = `${Math.random() * 28 + 1}%`;
+    };
     //カーソルをのせたら数値を表示
     balloon.addEventListener("mouseenter",()=>{
       balloon.style.fontSize = "10px";
@@ -146,8 +193,8 @@
     //クリックしたら破裂
     balloon.addEventListener("click",()=>{
       balloon.classList.add("explosion");
-      badSound.currentTime = 0;
-      badSound.play();
+      bubbleSound.currentTime = 0;
+      bubbleSound.play();
       //アニメーションが終了したら要素を消す
       balloon.addEventListener("animationend",()=>{
         balloon.classList.add("disabled");
@@ -183,8 +230,14 @@
   
       //スコアを加点
       scoreCount++;
+      continuousCorrect++;
       score.textContent = scoreCount;
       renderRate();
+      //連続正解したらボーナス(10の倍数ごと)
+      if((continuousCorrect % 10) == 0){
+        getBonus(continuousCorrect / 10);
+        bonusPoint += (continuousCorrect / 10);
+      };
       //文字を跳ねさせる
       score.classList.add("pyon");
       score.addEventListener("animationend",()=>{
@@ -211,6 +264,7 @@
     } else { //ミスタイプした場合
       //ミスタイプに加点
       badCount++;
+      continuousCorrect = 0;
       bad.textContent = badCount;
       renderRate();
       //文字を跳ねさせる
@@ -218,10 +272,9 @@
       bad.addEventListener("animationend",()=>{
         bad.classList.remove("pyon");
       });
-  
       //ブザーを鳴らす
-      badSound.currentTime = 0;
-      badSound.play();
+      bubbleSound.currentTime = 0;
+      bubbleSound.play();
   
       //ミスタイプのキーをカウント
       if(missType.find((v) => v.key === e.key)){ //すでにあるなら加点
@@ -237,9 +290,9 @@
           key:e.key,
           num:1,
         });
-      };
-    };
-  });
+      };//ミスタイプのキーをカウント
+    };//ミスした場合
+  });//キーボードを叩いたら
   
   //始めの問題をセット
   window.addEventListener("keydown",(e)=>{
@@ -255,18 +308,9 @@
       location.reload();
       return;
     };
-    silentSound.play();
-    typeSound.load();
-    resetSound.load();
-    badSound.load();
-    finishSound.load();
-    
-    untype.classList.remove("flash");
     setQuestion();
     startTime = Date.now();
     isTyping = true;
     resetSound.currentTime = 0;
     resetSound.play();
   });
-
-})();
