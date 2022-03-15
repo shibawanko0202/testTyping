@@ -248,10 +248,10 @@
         bonusPoint += (continuousCorrect / 10);
       };
       //文字を跳ねさせる
-      score.classList.add("pyon");
-      score.addEventListener("animationend",()=>{
-        score.classList.remove("pyon");
-      });
+      // score.classList.add("pyon");
+      // score.addEventListener("animationend",()=>{
+      //   score.classList.remove("pyon");
+      // });
   
       //タイプ音を鳴らす
       const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
@@ -281,10 +281,10 @@
       bad.textContent = badCount;
       renderRate();
       //文字を跳ねさせる
-      bad.classList.add("pyon");
-      bad.addEventListener("animationend",()=>{
-        bad.classList.remove("pyon");
-      });
+      // bad.classList.add("pyon");
+      // bad.addEventListener("animationend",()=>{
+      //   bad.classList.remove("pyon");
+      // });
       //ブザーを鳴らす
       const bubbleSound = new Audio("sound/パッ.mp3");
       bubbleSound.volume = .9;
