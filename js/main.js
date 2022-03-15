@@ -91,8 +91,8 @@
           return;
         };
         setQuestion();
-        const bubbleSound = new Audio("sound/パッ.mp3");
-        bubbleSound.volume = .9;
+        // const bubbleSound = new Audio("sound/パッ.mp3");
+        // bubbleSound.volume = .9;
         bubbleSound.currentTime = 0;
         bubbleSound.play();
       });
@@ -125,14 +125,14 @@
         return;
       };
       animeCount++;
-      const bubbleSound = new Audio("sound/パッ.mp3");
-      bubbleSound.volume = .9;
+      // const bubbleSound = new Audio("sound/パッ.mp3");
+      // bubbleSound.volume = .9;
       bubbleSound.currentTime = 0;
       bubbleSound.play();
     });
     balloonRoom.appendChild(bonus);
-    const bubbleSound = new Audio("sound/パッ.mp3");
-    bubbleSound.volume = .9;
+    // const bubbleSound = new Audio("sound/パッ.mp3");
+    // bubbleSound.volume = .9;
     bubbleSound.currentTime = 0;
     bubbleSound.play()
   };
@@ -200,8 +200,8 @@
     //クリックしたら破裂
     balloon.addEventListener("click",()=>{
       balloon.classList.add("explosion");
-      const bubbleSound = new Audio("sound/パッ.mp3");
-      bubbleSound.volume = .9;
+      // const bubbleSound = new Audio("sound/パッ.mp3");
+      // bubbleSound.volume = .9;
       bubbleSound.currentTime = 0;
       bubbleSound.play();
       //アニメーションが終了したら要素を消す
@@ -248,14 +248,14 @@
         bonusPoint += (continuousCorrect / 10);
       };
       //文字を跳ねさせる
-      // score.classList.add("pyon");
-      // score.addEventListener("animationend",()=>{
-      //   score.classList.remove("pyon");
-      // });
+      score.classList.add("pyon");
+      score.addEventListener("animationend",()=>{
+        score.classList.remove("pyon");
+      });
   
       //タイプ音を鳴らす
-      const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
-      typeSound.volume = 0.4;
+      // const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+      // typeSound.volume = 0.4;
       typeSound.currentTime = 0;
       typeSound.play();
   
@@ -268,8 +268,8 @@
           return;
         };
         setQuestion();
-        const resetSound = new Audio("sound/受話器置く03.mp3");
-        resetSound.volume = 0.8;
+        // const resetSound = new Audio("sound/受話器置く03.mp3");
+        // resetSound.volume = 0.8;
         resetSound.currentTime = 0;
         resetSound.play();
       };
@@ -281,13 +281,13 @@
       bad.textContent = badCount;
       renderRate();
       //文字を跳ねさせる
-      // bad.classList.add("pyon");
-      // bad.addEventListener("animationend",()=>{
-      //   bad.classList.remove("pyon");
-      // });
+      bad.classList.add("pyon");
+      bad.addEventListener("animationend",()=>{
+        bad.classList.remove("pyon");
+      });
       //ブザーを鳴らす
-      const bubbleSound = new Audio("sound/パッ.mp3");
-      bubbleSound.volume = .9;
+      // const bubbleSound = new Audio("sound/パッ.mp3");
+      // bubbleSound.volume = .9;
       bubbleSound.currentTime = 0;
       bubbleSound.play();
   
@@ -326,8 +326,8 @@
     setQuestion();
     startTime = Date.now();
     isTyping = true;
-    const resetSound = new Audio("sound/受話器置く03.mp3");
-    resetSound.volume = 0.8;
+    // const resetSound = new Audio("sound/受話器置く03.mp3");
+    // resetSound.volume = 0.8;
     resetSound.currentTime = 0;
     resetSound.play();
   });

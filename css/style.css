@@ -121,7 +121,6 @@ ul li a:hover{
   height: 20px;
   width: 100px;
   border-radius: 10px;
-  will-change: transform;
 }
 @keyframes timerBifore{
   0%{
@@ -291,7 +290,6 @@ ul li a:hover{
   cursor: pointer;
   box-shadow:inset 1px 1px 3px black;
   overflow: hidden;
-  will-change: transform;
 }
 .balloon:hover{
   z-index: 1;
@@ -342,7 +340,6 @@ ul li a:hover{
   text-shadow: inset 1px 1px 2px black;
   animation: up 5s ease-in forwards, bubble 1s ease-out 5s;
   z-index: -1;
-  will-change: transform;
 }
 .explosion{
   animation: bubble 1s ease-out;
