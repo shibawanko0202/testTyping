@@ -43,19 +43,24 @@
   let isIOS = ua.indexOf("iphone") !== -1;
   // let isIOS = ua.indexOf("windows nt") !== -1;
 
-  accuracy.textContent = "kkk";
+  // accuracy.textContent = "kkk";
 
 
   if(ua.indexOf("windows nt") !== -1) {
     console.log("「Microsoft Windows」をお使いですね!");
+    accuracy.textContent = "windows";
   } else if(ua.indexOf("android") !== -1) {
     console.log("「Android」をお使いですね!");
+    accuracy.textContent = "android";
   } else if(ua.indexOf("iphone") !== -1 || ua.indexOf("ipad") !== -1) {
     console.log("「iOS」をお使いですね!");
+    accuracy.textContent = "ios";
   } else if(ua.indexOf("mac os x") !== -1) {
     console.log("「macOS」をお使いですね!");
+    accuracy.textContent = "macOS";
   } else {
     console.log("何をお使いなのですか?");
+    accuracy.textContent = "who?";
   }
 
   //ミスタイプのキーリスト
