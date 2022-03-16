@@ -39,7 +39,7 @@
   bubbleSound.volume = .9;
   const finishSound = new Audio("sound/クイズ正解3.mp3");
 
-  const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
+  const isIOS = navigator.userAgent.match(/iPhone/);
   
   //ミスタイプのキーリスト
   const missType = [];
@@ -57,6 +57,14 @@
   let accuracyRate = 0;
   let continuousCorrect = 0;
   let bonusPoint = 0;
+
+  // function is() {
+  //   if (navigator.userAgent.match(/iPhone/)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   
   //問題のセット
   function setQuestion(){
