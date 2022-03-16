@@ -39,7 +39,9 @@
   bubbleSound.volume = .9;
   const finishSound = new Audio("sound/クイズ正解3.mp3");
 
-  const isIOS = navigator.userAgent.match(/iPhone/);
+  let isIOS = navigator.userAgent.match(/iPhone/);
+
+  accuracy.textContent = "kkk";
   
   //ミスタイプのキーリスト
   const missType = [];
