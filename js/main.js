@@ -39,10 +39,25 @@
   bubbleSound.volume = .9;
   const finishSound = new Audio("sound/クイズ正解3.mp3");
 
-  let isIOS = navigator.userAgent.match(/iPhone/);
+  let ua = window.navigator.userAgent.toLowerCase();
+  let isIOS = ua.indexOf("iphone") !== -1;
+  // let isIOS = ua.indexOf("windows nt") !== -1;
 
   accuracy.textContent = "kkk";
-  
+
+
+  if(ua.indexOf("windows nt") !== -1) {
+    console.log("「Microsoft Windows」をお使いですね!");
+  } else if(ua.indexOf("android") !== -1) {
+    console.log("「Android」をお使いですね!");
+  } else if(ua.indexOf("iphone") !== -1 || ua.indexOf("ipad") !== -1) {
+    console.log("「iOS」をお使いですね!");
+  } else if(ua.indexOf("mac os x") !== -1) {
+    console.log("「macOS」をお使いですね!");
+  } else {
+    console.log("何をお使いなのですか?");
+  }
+
   //ミスタイプのキーリスト
   const missType = [];
   
@@ -180,8 +195,10 @@
     const finishScore = ((scoreCount + bonusPoint - (finishTime / 1000)) * (accuracyRate / 100)).toFixed(2);
     untype.textContent = finishScore;
     // const finishSound = new Audio("sound/クイズ正解3.mp3");
-    finishSound.currentTime = 0;
-    finishSound.play();
+    if(!isIOS){
+      finishSound.currentTime = 0;
+      finishSound.play();
+    };
     timer.classList.add("hidden");
     untype.classList.add("score");
     restart.classList.add("show");
