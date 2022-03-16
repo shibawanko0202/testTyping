@@ -31,13 +31,15 @@
   const timer = document.getElementById("timer");
   
   //サウンドエフェクト
-  // const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
-  // typeSound.volume = 0.4;
-  // const resetSound = new Audio("sound/受話器置く03.mp3");
-  // resetSound.volume = 0.8;
-  // const bubbleSound = new Audio("sound/パッ.mp3");
-  // bubbleSound.volume = .9;
-  // const finishSound = new Audio("sound/クイズ正解3.mp3");
+  const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+  typeSound.volume = 0.4;
+  const resetSound = new Audio("sound/受話器置く03.mp3");
+  resetSound.volume = 0.8;
+  const bubbleSound = new Audio("sound/パッ.mp3");
+  bubbleSound.volume = .9;
+  const finishSound = new Audio("sound/クイズ正解3.mp3");
+
+  const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
   
   //ミスタイプのキーリスト
   const missType = [];
@@ -91,8 +93,11 @@
           return;
         };
         setQuestion();
-        const bubbleSound = new Audio("sound/パッ.mp3");
-        bubbleSound.volume = .9;
+        // const bubbleSound = new Audio("sound/パッ.mp3");
+        // bubbleSound.volume = .9;
+        if(isIOS){
+          return;
+        };
         bubbleSound.currentTime = 0;
         bubbleSound.play();
       });
@@ -117,8 +122,8 @@
     bonus.style.lineHeight = `${point * 6 + 75}px`;
     bonus.style.fontSize = `${point * 1.5 + 16}px`;
     bonus.style.backgroundColor = `hsla(${Math.random() * 360}, 65%, 55%, .6)`;
-    const bubbleSound = new Audio("sound/パッ.mp3");
-    bubbleSound.volume = .9;
+    // const bubbleSound = new Audio("sound/パッ.mp3");
+    // bubbleSound.volume = .9;
     //アニメーションが全て終わったら消す
     let animeCount = 0;
     bonus.addEventListener("animationend",()=>{
@@ -129,10 +134,16 @@
       animeCount++;
       // const bubbleSound = new Audio("sound/パッ.mp3");
       // bubbleSound.volume = .9;
+      if(isIOS){
+        return;
+      };
       bubbleSound.currentTime = 0;
       bubbleSound.play();
     });
     balloonRoom.appendChild(bonus);
+    if(isIOS){
+      return;
+    };
     bubbleSound.currentTime = 0;
     bubbleSound.play()
   };
@@ -158,7 +169,7 @@
     typed.textContent = "";
     const finishScore = ((scoreCount + bonusPoint - (finishTime / 1000)) * (accuracyRate / 100)).toFixed(2);
     untype.textContent = finishScore;
-    const finishSound = new Audio("sound/クイズ正解3.mp3");
+    // const finishSound = new Audio("sound/クイズ正解3.mp3");
     finishSound.currentTime = 0;
     finishSound.play();
     timer.classList.add("hidden");
@@ -202,8 +213,10 @@
       balloon.classList.add("explosion");
       // const bubbleSound = new Audio("sound/パッ.mp3");
       // bubbleSound.volume = .9;
-      bubbleSound.currentTime = 0;
-      bubbleSound.play();
+      if(!isIOS){
+        bubbleSound.currentTime = 0;
+        bubbleSound.play();
+      };
       //アニメーションが終了したら要素を消す
       balloon.addEventListener("animationend",()=>{
         balloon.classList.add("disabled");
@@ -254,10 +267,12 @@
       });
   
       //タイプ音を鳴らす
-      const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
-      typeSound.volume = 0.4;
-      typeSound.currentTime = 0;
-      typeSound.play();
+      // const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
+      // typeSound.volume = 0.4;
+      if(!isIOS){
+        typeSound.currentTime = 0;
+        typeSound.play();
+      };
   
       //もしuntypeが無くなったら次の問題へ
       if(untype.textContent.length === 0){
@@ -268,8 +283,11 @@
           return;
         };
         setQuestion();
-        const resetSound = new Audio("sound/受話器置く03.mp3");
-        resetSound.volume = 0.8;
+        // const resetSound = new Audio("sound/受話器置く03.mp3");
+        // resetSound.volume = 0.8;
+        if(isIOS){
+          return;
+        };
         resetSound.currentTime = 0;
         resetSound.play();
       };
@@ -286,10 +304,12 @@
         bad.classList.remove("pyon");
       });
       //ブザーを鳴らす
-      const bubbleSound = new Audio("sound/パッ.mp3");
-      bubbleSound.volume = .9;
-      bubbleSound.currentTime = 0;
-      bubbleSound.play();
+      // const bubbleSound = new Audio("sound/パッ.mp3");
+      // bubbleSound.volume = .9;
+      if(!isIOS){
+        bubbleSound.currentTime = 0;
+        bubbleSound.play();
+      };
   
       //ミスタイプのキーをカウント
       if(missType.find((v) => v.key === e.key)){ //すでにあるなら加点
@@ -326,8 +346,11 @@
     setQuestion();
     startTime = Date.now();
     isTyping = true;
-    const resetSound = new Audio("sound/受話器置く03.mp3");
-    resetSound.volume = 0.8;
+    // const resetSound = new Audio("sound/受話器置く03.mp3");
+    // resetSound.volume = 0.8;
+    if(isIOS){
+      return;
+    };
     resetSound.currentTime = 0;
     resetSound.play();
   });
