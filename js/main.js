@@ -29,6 +29,7 @@
   const close = document.getElementById("close");
   const restart = document.getElementById("restart");
   const timer = document.getElementById("timer");
+  const test = document.getElementById("test");
   
   //サウンドエフェクト
   const typeSound = new Audio("sound/カタッ(Enterキーを押した音).mp3");
@@ -44,6 +45,8 @@
   // let isIOS = ua.indexOf("windows nt") !== -1;
 
   // accuracy.textContent = "kkk";
+  console.log(ua)
+  test.textContent = ua;
 
 
   if(ua.indexOf("windows nt") !== -1) {

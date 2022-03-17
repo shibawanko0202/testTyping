@@ -18,6 +18,9 @@ body{
   color: rgb(8, 41, 26);
   user-select: none;
 }
+#test{
+  font-family: 'Ibarra Real Nova', serif;
+}
 /* header */
 
 header{
